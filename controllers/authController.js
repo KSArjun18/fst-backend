@@ -16,7 +16,7 @@ exports.login = async (req, res) => {
             lastName: user.lastName,
             role: user.role,
             employeeId: user.employeeId
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        }, process.env.JWT_SECRET, { expiresIn: '8h' });
 
         res.json({ token });
     } catch (error) {
