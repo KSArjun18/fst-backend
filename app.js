@@ -22,9 +22,9 @@ app.use(cors({
 app.use(express.json());
 
 
-app.use('/api/auth', authRoutes);
-app.use('/api/employees', employeeRoutes);
-app.use('/api/tasks', taskRoutes); 
+app.use('/auth', authRoutes);
+app.use('/employees', employeeRoutes);
+app.use('/tasks', taskRoutes); 
 
 
 app.use(errorHandler);

@@ -4,9 +4,9 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const router = express.Router();
 
 
-router.post('/', authMiddleware(['Employee']), createTask);
+router.post('/create_task', authMiddleware(['Employee']), createTask);
 
 
-router.get('/', authMiddleware(['Employee']), getTasksForEmployee);
+router.get('/get_tasks', authMiddleware(['Employee']), getTasksForEmployee);
 
 module.exports = router;
