@@ -10,8 +10,8 @@ router.post('/create_employee', authMiddleware(['HR']), createEmployee);
 router.get('/get_employee', authMiddleware(['HR']), getAllEmployees);
 
 
-router.put('/:edit_employee', authMiddleware(['HR']), editEmployee);
+router.put('/:employeeId', authMiddleware(['HR']), editEmployee);
 
-router.delete('/:delete_employee', authMiddleware(['HR']), deleteEmployee);
+router.delete('/:employeeId', authMiddleware(['HR']), deleteEmployee);
 
 module.exports = router;

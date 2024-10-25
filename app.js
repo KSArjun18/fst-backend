@@ -14,9 +14,9 @@ connectDB();
 
 
 app.use(cors({
-    origin: 'http://localhost:3000', 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-    credentials: true 
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
 }));
 
 app.use(express.json());
@@ -24,11 +24,12 @@ app.use(express.json());
 
 app.use('/auth', authRoutes);
 app.use('/employees', employeeRoutes);
-app.use('/tasks', taskRoutes); 
+app.use('/tasks', taskRoutes);
 
-
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Route not found' });
+});
 app.use(errorHandler);
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
