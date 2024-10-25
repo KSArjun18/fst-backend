@@ -12,12 +12,12 @@ exports.createEmployee = async (req, res) => {
         res.status(201).json({ message: 'Employee created successfully' });
     } catch (err) {
         if (err.name === 'ValidationError') {
-            const errors = Object.values(err.errors).map(e => e.message); // Collect error messages
+            const errors = Object.values(err.errors).map(e => e.message);
             return res.status(400).json({ message: 'Validation failed', errors });
         }
         if (err.code === 11000) {
             const field = Object.keys(err.keyValue)[0];
-            return res.status(400).json({ message: `${field} must be unique` });
+            return res.status(400).json({ message: `${field} already exists` });
         }
         console.error('Create Employee Error:', err.message);
         res.status(500).json({ message: 'Server error' });
