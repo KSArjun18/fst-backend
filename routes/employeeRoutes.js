@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/create_employee', authMiddleware(['HR']), createEmployee);
 
 
-router.get('/get_employee', authMiddleware(['HR']), getAllEmployees);
+router.get('/get_employee', getAllEmployees);
 
 
 router.put('/:employeeId', authMiddleware(['HR']), editEmployee);

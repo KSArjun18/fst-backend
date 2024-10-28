@@ -1,5 +1,5 @@
 const User = require('../models/User');
-
+ 
 
 exports.createEmployee = async (req, res) => {
     const { firstName, lastName, email, phoneNumber, role, employeeId, password } = req.body;
