@@ -1,15 +1,32 @@
 const User = require('../models/User');
- 
+
+// Helper function to generate the next employee ID
+const generateEmployeeId = async () => {
+    const lastEmployee = await User.findOne({ employeeId: { $regex: /^FST\d{3}$/ } })
+        .sort({ employeeId: -1 }); // Find the latest employee by ID
+
+    if (!lastEmployee) {
+        return 'FST001'; // Start from FST001 if no employees exist
+    }
+
+    // Extract the numeric part and increment it
+    const lastIdNum = parseInt(lastEmployee.employeeId.substring(3), 10);
+    const nextIdNum = lastIdNum + 1;
+
+    // Pad the number with leading zeros if needed (e.g., 002, 012)
+    const nextId = `FST${String(nextIdNum).padStart(3, '0')}`;
+    return nextId;
+};
 
 exports.createEmployee = async (req, res) => {
-    const { firstName, lastName, email, phoneNumber, role, employeeId, password } = req.body;
+    const { firstName, lastName, email, phoneNumber, role, password } = req.body;
     try {
-        let user = await User.findOne({ employeeId });
-        if (user) return res.status(400).json({ message: 'Employee already exists' });
+        const employeeId = await generateEmployeeId(); // Generate the new employee ID
 
-        user = new User({ firstName, lastName, email, phoneNumber, role, employeeId, password });
+        const user = new User({ firstName, lastName, email, phoneNumber, role, employeeId, password });
         await user.save();
-        res.status(201).json({ message: 'Employee created successfully' });
+
+        res.status(201).json({ message: 'Employee created successfully', employeeId });
     } catch (err) {
         if (err.name === 'ValidationError') {
             const errors = Object.values(err.errors).map(e => e.message);
@@ -23,6 +40,7 @@ exports.createEmployee = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 
 exports.getAllEmployees = async (req, res) => {
